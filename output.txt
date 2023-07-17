@@ -1,0 +1,3 @@
+Symbol: GME
+Start Date: 2002-04-04
+End Date: 2017-12-31
