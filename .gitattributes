@@ -1,0 +1,4 @@
+# Specify programming languages for different file extensions
+*.py linguist-language=Python
+*.ipynb linguist-language=Jupyter Notebook
+*.js linguist-language=JavaScript
