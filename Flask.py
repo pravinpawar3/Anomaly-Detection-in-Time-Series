@@ -81,6 +81,26 @@ def train():
     threshold = np.max(train_loss+0.5)
     return jsonify({'message': 'Model trained successfully'})
 
+def getAccuracy(anomaly_start_date, anomaly_end_date, result_df):
+    result_df['True Anomaly'] = False  # Initialize the 'true anomaly' column
+
+    # Set 'true anomaly' values for the desired date range
+    result_df.loc[(result_df['timeStamp'] >= anomaly_start_date) & (result_df['timeStamp'] <= anomaly_end_date), 'True Anomaly'] = True
+    # Assuming 'result_df' has been created as mentioned earlier
+    true_anomalies = result_df[result_df['True Anomaly']]
+    predicted_anomalies = result_df[result_df['Anomaly']]
+
+    # Calculate the number of correctly predicted anomalies
+    correctly_predicted = len(predicted_anomalies[predicted_anomalies['True Anomaly']])
+
+    # Calculate the total number of actual anomalies
+    total_actual_anomalies = min(1, len(true_anomalies))
+
+    # Calculate the accuracy
+    accuracy = min(1,correctly_predicted / total_actual_anomalies)
+
+    return accuracy
+
 @app.route('/predict', methods=['POST'])
 def predict():
     global model
@@ -114,14 +134,23 @@ def predict():
     anomaly_scores = np.mean(np.abs(X_test_pred-X_test), axis=1)
     
     result_df = pd.DataFrame(test_data[60:])
-    result_df['anomaly'] = anomaly_scores > threshold
+    result_df['Anomaly'] = anomaly_scores > threshold
     result_df['Close'] = test_data[60:].closePrices
-    anomalies_df = result_df.loc[result_df.anomaly]
+    anomalies_df = result_df.loc[result_df.Anomaly]
+    
+    trueAnomaly = data.get('true_anomaly')
+    anomaly_start_date = data.get('anomaly_start_date')
+    anomaly_end_date = data.get('anomaly_end_date')
+    
+    accuracy = 'NA'
+    if trueAnomaly:
+        accuracy = getAccuracy(anomaly_start_date, anomaly_end_date, result_df)
 
     return jsonify({ 
      'actualValues': result_df.Close.astype(int).tolist(),
      'anomalytimeStamp': anomalies_df.timeStamp.tolist(),
-     'actualtimeStamp': result_df.timeStamp.tolist()})
+     'actualtimeStamp': result_df.timeStamp.tolist(),
+     'accuracy': accuracy})
 
 @app.route('/display', methods=['GET'])
 def display():

@@ -6,13 +6,17 @@ import StockChart from './StockChart';
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [stockData, setStockData] = useState({ date: [], price: [] },);
-  const [trainStartDate, setTrainStartDate] = useState('');
-  const [trainEndDate, setTrainEndDate] = useState('');
-  const [symbolInput, setSymbolInput] = useState('');
-  const [testStartDate, setTestStartDate] = useState('');
-  const [testEndDate, setTestEndDate] = useState('');
+  const [trainStartDate, setTrainStartDate] = useState('2002-04-04');
+  const [trainEndDate, setTrainEndDate] = useState('2017-12-31');
+  const [symbolInput, setSymbolInput] = useState('GME');
+  const [testStartDate, setTestStartDate] = useState('2018-01-03');
+  const [testEndDate, setTestEndDate] = useState('2021-04-28');
+  const [trueStartDate, setTrueStartDate] = useState('2021-01-15');
+  const [trueEndDate, setTrueEndDate] = useState('2021-04-01');
   const [trainingCompleted, setPostTrainContent] = useState(false);
   const [predictionCompleted, setPostTestContent] = useState(false);
+  const [checkboxValue, setCheckboxValue] = useState(false);
+  const [accuracy, setAccuracy] = useState(false);
 
   const TrainModel = async () => {
     try {
@@ -21,7 +25,7 @@ const Dashboard = () => {
       const response = await axios.post('http://127.0.0.1:5000/train', {
         symbol: symbolInput,
         start_date: trainStartDate,
-        end_date: trainEndDate,
+        end_date: trainEndDate
       });
       setPostTrainContent(true);
     } catch (error) {
@@ -39,9 +43,13 @@ const Dashboard = () => {
         symbol: symbolInput,
         start_date: testStartDate,
         end_date: testEndDate,
+        true_anomaly : checkboxValue,
+        anomaly_start_date:  trueStartDate,
+        anomaly_end_date: trueEndDate
       });
-      setStockData(response.data);
       setPostTestContent(true);
+      setStockData(response.data);
+      setAccuracy(response.data.accuracy);
     } catch (error) {
       console.error(error);
     } finally {
@@ -57,6 +65,15 @@ const Dashboard = () => {
     setTestStartDate(event.target.value);
   };
 
+  const handleTrueEdDateChange = (event) => {
+    setTrueEndDate(event.target.value);
+  };
+
+  const handleTrueStDateChange = (event) => {
+    setTrueStartDate(event.target.value);
+  };
+
+
   const handleTrainStDateChange = (event) => {
     setTrainStartDate(event.target.value);
   };
@@ -68,6 +85,11 @@ const Dashboard = () => {
   const handleSymbolChange = (event) => {
     setSymbolInput(event.target.value);
   };
+
+  const handleCheckboxChange = (event) => {
+    setCheckboxValue(event.target.checked);
+  };
+
 
   return (
     <div className="dashboard-container">
@@ -116,6 +138,32 @@ const Dashboard = () => {
               <label>Model prediction is Completed!</label>
             </div>
           )}
+        </div>
+        <br />
+        <div className="dashboard-row">
+          <div>
+            <label>Anomaly Start Date:</label>
+            <input type="text" disabled={!checkboxValue} value={trueStartDate} onChange={handleTrueStDateChange} />
+          </div>
+          <div>
+            <label>Anomaly End Date:</label>
+            <input type="text" disabled={!checkboxValue} value={trueEndDate} onChange={handleTrueEdDateChange} />
+          </div>
+          <div style={{ margin: 5}}>
+          <label>
+            <input disabled={loading}
+              type="checkbox"
+              checked={checkboxValue}
+              onChange={handleCheckboxChange}
+            />
+              Calculate Accuracy
+          </label>
+          { predictionCompleted && checkboxValue && (
+            <div style={{ margin: 5}}>
+              <label>Accuracy :</label> {(accuracy * 100).toFixed(2)}
+            </div>
+          )}
+          </div>
         </div>
       </div>
       <div>
