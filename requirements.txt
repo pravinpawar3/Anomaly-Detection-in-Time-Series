@@ -1,0 +1,8 @@
+Flask==2.1.2
+Flask-Cors==3.0.10
+tensorflow==2.11.0
+scikit-learn==1.1.1
+pandas==1.4.3
+yfinance==0.1.72
+numpy==1.23.1
+pickle5==0.0.11
