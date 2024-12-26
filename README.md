@@ -106,7 +106,7 @@ The core of the anomaly detection process uses an LSTM (Long Short-Term Memory) 
     - Decoder: LSTM layers that reconstruct the input sequence.
     - The reconstruction error is used to flag anomalies.
 
-- **Modelling:
+- **Modelling**:
     - Historical stock price data from Yahoo Finance is used to train the LSTM Autoencoder, allowing the model to learn patterns in stock prices and detect anomalies in the test set by identifying deviations from these patterns.
 ---
 
