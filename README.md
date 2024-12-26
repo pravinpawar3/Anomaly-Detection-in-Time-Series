@@ -22,14 +22,15 @@ This project implements anomaly detection in stock price data using an LSTM-base
 
 Before running this project, make sure you have the following installed on your machine:
 
-- **Python 3.8+**: For the Flask backend and training the model.
-- **Node.js**: For running the React frontend.
-- **pip** (Python package manager): To install Python dependencies.
-- **npm** (Node package manager): To install frontend dependencies.
+- Python 3.8+: Required for running the Flask backend and training the model.
+- Node.js: Needed to run the React frontend.
+- React: A JavaScript library for building the user interface.
+- pip: Python package manager to install Python dependencies.
+- npm: Node package manager to install frontend dependencies.
 
-You can install Python and Node.js from their official websites:
-- [Python](https://www.python.org/downloads/)
-- [Node.js](https://nodejs.org/)
+Installation Links:
+- Download Python: https://www.python.org/downloads/
+- Download Node.js: https://nodejs.org/
 
 ---
 
