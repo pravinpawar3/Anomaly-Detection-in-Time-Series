@@ -2,6 +2,7 @@
 
 This project implements anomaly detection in stock price data using an LSTM-based Autoencoder model. The system is designed to be deployed with a **React Dashboard** on the frontend and a **Flask** API backend. It identifies unusual price movements (anomalies) in real-time and displays them on an interactive web dashboard.
 
+![image](https://github.com/user-attachments/assets/4221b882-f5dc-4d62-9065-b818d164dece)
 
 <img width="1472" alt="Anomaly" src="https://github.com/pravinpawar3/Anomaly-Detection-in-Time-Series/assets/23742943/8357adfd-5ec3-4654-b041-3ef47b746631">
 
