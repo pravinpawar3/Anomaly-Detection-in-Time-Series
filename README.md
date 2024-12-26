@@ -1,4 +1,4 @@
-# Anomaly-Detection-in-Time-Series
+# Anomaly-Detection-in-Stock-Price
 
 <img width="1472" alt="Anomaly" src="https://github.com/pravinpawar3/Anomaly-Detection-in-Time-Series/assets/23742943/8357adfd-5ec3-4654-b041-3ef47b746631">
 
