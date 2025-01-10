@@ -1,4 +1,4 @@
-# Anomaly Detection in Stock Prices using LSTM-based Autoencoder
+# Alpha Detector: Steep Bull/Bear trends (Anomaly) detection in Stock Prices using LSTM-based Autoencoder
 
 This project implements anomaly detection in stock price data using an LSTM-based Autoencoder model. The system is designed to be deployed with a **React Dashboard** on the frontend and a **Flask** API backend. It identifies unusual price movements (anomalies) in real-time and displays them on an interactive web dashboard.
 
